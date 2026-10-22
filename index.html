@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#234b3b">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="سجل الحلال">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-192.png">
+<title>سجل الحلال</title>
+<style>
+:root{--green:#234b3b;--green2:#2f6b52;--cream:#f6f5ef;--line:#dce4dd;--ink:#18231d;--muted:#66756b;--red:#a43e35}
+*{box-sizing:border-box}body{margin:0;background:var(--cream);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Tahoma,Arial,sans-serif}
+header{background:var(--green);color:white;padding:22px 17px 18px;border-radius:0 0 22px 22px}
+h1{font-size:25px;margin:0 0 6px}header p{margin:0;opacity:.85;font-size:14px}
+main{max-width:850px;margin:auto;padding:14px 12px 35px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:12px 0}
+.stat,.panel{background:white;border:1px solid var(--line);border-radius:15px;padding:13px}
+.stat small{display:block;color:var(--muted);font-size:12px}.stat strong{display:block;font-size:24px;margin-top:5px;color:var(--green)}
+.tabs{display:flex;gap:7px;overflow:auto;margin:12px 0}
+.tabs button{white-space:nowrap;border:1px solid var(--line);border-radius:999px;background:white;padding:10px 14px;font-size:14px;color:var(--ink)}
+.tabs button.active{background:var(--green);color:white;border-color:var(--green)}
+h2{font-size:18px;margin:0 0 12px}.panel{margin-bottom:12px}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+label{display:block;font-size:13px;color:var(--muted);margin-bottom:5px}
+input,select,textarea{width:100%;border:1px solid #cfd9d1;background:#fff;border-radius:10px;padding:11px;font:inherit;font-size:15px;color:var(--ink)}
+textarea{min-height:75px;resize:vertical}.wide{grid-column:1/-1}
+button{cursor:pointer;font:inherit}.primary{background:var(--green);color:#fff;border:0;border-radius:11px;padding:12px 15px;font-weight:650}
+.secondary{background:#eef3ef;color:var(--green);border:1px solid var(--line);border-radius:10px;padding:9px 12px}
+.danger{background:#fff1ef;color:var(--red);border:1px solid #f0d0cb;border-radius:10px;padding:9px 12px}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.search{margin-bottom:10px}
+.animal{border:1px solid var(--line);background:#fff;border-radius:13px;padding:12px;margin:8px 0}
+.animalTop{display:flex;justify-content:space-between;gap:10px;align-items:start}
+.num{font-weight:800;color:var(--green);font-size:17px}.muted{font-size:13px;color:var(--muted);margin-top:5px;line-height:1.7}
+.pill{display:inline-block;border-radius:999px;background:#eaf2ec;color:var(--green);padding:4px 8px;font-size:12px}
+.children{border-right:2px solid #c6d9ca;margin:10px 4px 0 0;padding-right:12px}
+.empty{color:var(--muted);padding:18px 5px;text-align:center;font-size:14px}
+.hidden{display:none!important}.hint{font-size:13px;line-height:1.8;color:var(--muted)}
+footer{text-align:center;font-size:12px;color:var(--muted);padding:12px}
+@media(max-width:480px){.grid{grid-template-columns:1fr}.stats{gap:6px}.stat{padding:10px}.stat strong{font-size:21px}.wide{grid-column:auto}}
+</style>
+</head>
+<body>
+<header><h1>🐑 سجل الحلال</h1><p>ترقيم الغنم · الولادات · شجرة النسب</p></header>
+<main>
+<div id="appNotice" role="status" style="display:none;background:#fff8df;border:1px solid #e8d89a;color:#5e4b12;padding:12px;border-radius:12px;line-height:1.8;margin:10px 0"></div>
+<div class="stats">
+ <div class="stat"><small>إجمالي المسجل</small><strong id="total">0</strong></div>
+ <div class="stat"><small>إناث</small><strong id="females">0</strong></div>
+ <div class="stat"><small>مواليد مسجلون</small><strong id="babies">0</strong></div>
+</div>
+<nav class="tabs">
+ <button class="active" data-tab="list">الغنم</button><button data-tab="add">إضافة رأس</button><button data-tab="birth">تسجيل ولادة</button><button data-tab="family">شجرة العائلة</button><button data-tab="backup">حفظ واسترجاع</button>
+</nav>
+<section id="list" class="tab panel">
+ <h2>سجل الغنم</h2><p class="hint">أول مرة؟ اضغط «تجهيز الأرقام 1–100» لإنشاء سجلات فارغة، ثم عدّل جنس ووصف كل رأس. المواليد التالية تأخذ أرقامًا من 101 فما بعد.</p><div class="actions" style="margin-bottom:10px"><button class="secondary" id="setup100" type="button">تجهيز الأرقام 1–100</button></div><input id="search" class="search" placeholder="ابحث برقم الرأس أو الوصف…">
+ <div id="animalList"></div>
+</section>
+<section id="add" class="tab panel hidden">
+ <h2 id="animalFormTitle">إضافة رأس جديد</h2>
+ <form id="animalForm"><input type="hidden" id="editId">
+ <div class="grid">
+  <div><label>رقم الرأس</label><input id="animalId" type="number" min="1" placeholder="تلقائي إذا تركته فارغًا"></div>
+  <div><label>الجنس</label><select id="sex"><option value="غير محدد">غير محدد</option><option value="أنثى">أنثى</option><option value="ذكر">ذكر</option></select></div>
+  <div><label>تاريخ الميلاد</label><input id="dob" type="date"></div>
+  <div><label>رقم الأم</label><select id="mother"><option value="">غير معروف / لا يوجد</option></select></div>
+  <div><label>رقم الأب</label><select id="father"><option value="">غير معروف / لا يوجد</option></select></div>
+  <div><label>الحالة</label><select id="status"><option>موجودة</option><option>مباعة</option><option>نافقة</option><option>مفقودة</option></select></div>
+  <div class="wide"><label>الاسم أو الوصف / العلامات</label><input id="description" placeholder="مثال: بيضاء، أذنها فيها علامة…"></div>
+  <div class="wide"><label>ملاحظات</label><textarea id="notes" placeholder="أي معلومات إضافية"></textarea></div>
+ </div>
+ <div class="actions"><button class="primary" type="submit">حفظ الرأس</button><button class="secondary" type="button" id="cancelEdit">إلغاء التعديل</button></div>
+ </form>
+ <p class="hint">تقدر تبدأ بإدخال أرقام الغنم الحالية من 1 إلى 100، أو تترك الرقم فارغًا ليختار البرنامج الرقم التالي المتاح.</p>
+</section>
+<section id="birth" class="tab panel hidden">
+ <h2>تسجيل ولادة</h2>
+ <form id="birthForm"><div class="grid">
+  <div class="wide"><label>الأم</label><select id="birthMother" required></select></div>
+  <div><label>تاريخ الولادة</label><input id="birthDate" type="date" required></div>
+  <div><label>عدد المواليد</label><select id="birthCount"><option value="1">واحد</option><option value="2">توأم (2)</option><option value="3">ثلاثة (3)</option></select></div>
+  <div><label>جنس المولود الأول</label><select id="birthSex1"><option>أنثى</option><option>ذكر</option></select></div>
+  <div id="sex2Wrap" class="hidden"><label>جنس المولود الثاني</label><select id="birthSex2"><option>ذكر</option><option>أنثى</option></select></div>
+  <div id="sex3Wrap" class="hidden"><label>جنس المولود الثالث</label><select id="birthSex3"><option>ذكر</option><option>أنثى</option></select></div>
+  <div class="wide"><label>ملاحظات الولادة</label><textarea id="birthNotes" placeholder="مثال: توأم، حالة المولود…"></textarea></div>
+ </div><div class="actions"><button class="primary" type="submit">تسجيل الولادة وإنشاء الأرقام</button></div></form>
+ <div id="birthResult" class="hint"></div>
+</section>
+<section id="family" class="tab panel hidden">
+ <h2>شجرة العائلة</h2><label>اختر الرأس</label><select id="familyRoot"></select><div id="familyTree"></div>
+</section>
+<section id="backup" class="tab panel hidden">
+ <h2>حفظ بياناتك</h2>
+ <p class="hint">البيانات محفوظة في هذا المتصفح على هذا الجهاز. خذ نسخة احتياطية بانتظام، خصوصًا قبل تغيير الجهاز أو مسح بيانات المتصفح.</p>
+ <div class="actions"><button class="primary" id="export">تنزيل نسخة احتياطية</button><label class="secondary" for="importFile">استرجاع نسخة</label><input id="importFile" type="file" accept=".json,application/json" class="hidden"></div>
+ <div class="actions"><button class="danger" id="clearAll">حذف جميع البيانات</button></div>
+</section>
+<footer>نصيحة: نزّل نسخة احتياطية كل فترة للاحتفاظ بسجل الحلال.</footer>
+</main>
+<script>
+const $=id=>document.getElementById(id);
+const STORE='halal_register_v1';
+let animals=[];
+let memoryOnly=false;
+function showNotice(message){const el=$('appNotice');el.textContent=message;el.style.display='block'}
+function readSaved(){
+  try { const raw=window.localStorage.getItem(STORE); return raw ? JSON.parse(raw) : null; }
+  catch(e) { memoryOnly=true; return null; }
+}
+try { const stored=readSaved(); if(Array.isArray(stored)) animals=stored; }
+catch(e) { animals=[]; memoryOnly=true; }
+const save=()=>{
+  try { window.localStorage.setItem(STORE,JSON.stringify(animals)); memoryOnly=false; }
+  catch(e) { memoryOnly=true; }
+  renderAll();
+  if(memoryOnly) showNotice('تنبيه: المتصفح منع الحفظ الدائم. نزّل نسخة احتياطية الآن، وشغّل الموقع من رابط HTTPS ثم أضفه إلى الشاشة الرئيسية.');
+  else showNotice('تم حفظ التغييرات على هذا الجهاز. خذ نسخة احتياطية بشكل دوري.');
+};
+const nextId=()=>{let n=1;const used=new Set(animals.map(a=>Number(a.id)));while(used.has(n))n++;return n};
+const byId=id=>animals.find(a=>Number(a.id)===Number(id));
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function setTab(id){document.querySelectorAll('.tab').forEach(e=>e.classList.toggle('hidden',e.id!==id));document.querySelectorAll('.tabs button').forEach(b=>b.classList.toggle('active',b.dataset.tab===id));if(id==='add'&&!$('editId').value)resetForm();if(id==='family')renderTree()}
+document.querySelectorAll('.tabs button').forEach(b=>b.addEventListener('click',()=>setTab(b.dataset.tab)));
+function optionsFor(select,includeBlank=true){const old=select.value;select.innerHTML=(includeBlank?'<option value="">غير معروف / لا يوجد</option>':'<option value="">اختر الأم</option>')+animals.slice().sort((a,b)=>a.id-b.id).map(a=>`<option value="${a.id}">#${a.id} — ${esc(a.description||a.sex)}</option>`).join('');if([...select.options].some(o=>o.value===old))select.value=old}
+function renderAll(){
+ $('total').textContent=animals.length;
+ $('females').textContent=animals.filter(a=>a.sex==='أنثى'&&a.status!=='مباعة'&&a.status!=='نافقة').length;
+ $('babies').textContent=animals.filter(a=>a.mother).length;
+ ['mother','father','birthMother','familyRoot'].forEach(id=>optionsFor($(id),id==='mother'||id==='father'));
+ if(!$('familyRoot').value&&animals.length)$('familyRoot').value=animals[0].id;
+ renderList();renderTree();
+}
+function renderList(){
+ const q=$('search').value.trim().toLowerCase();
+ const arr=animals.slice().sort((a,b)=>a.id-b.id).filter(a=>[a.id,a.description,a.sex,a.status,a.mother,a.father].join(' ').toLowerCase().includes(q));
+ $('animalList').innerHTML=arr.length?arr.map(a=>`<article class="animal"><div class="animalTop"><div><div class="num">رقم ${a.id} <span class="pill">${esc(a.sex)}</span></div><div class="muted">${esc(a.description||'بدون وصف')}<br>الأم: ${a.mother?'#'+a.mother:'غير محددة'} · الأب: ${a.father?'#'+a.father:'غير محدد'}<br>الميلاد: ${esc(a.dob||'غير مسجل')} · الحالة: ${esc(a.status||'موجودة')}</div></div><button class="secondary" onclick="editAnimal(${a.id})">تعديل</button></div><div class="actions"><button class="secondary" onclick="showFamily(${a.id})">عرض العائلة</button><button class="danger" onclick="deleteAnimal(${a.id})">حذف</button></div></article>`).join(''):'<div class="empty">ما فيه رؤوس مسجلة تطابق البحث. أضف أول رأس من تبويب «إضافة رأس».</div>';
+}
+$('search').addEventListener('input',renderList);
+$('setup100').addEventListener('click',()=>{
+ if(animals.some(a=>Number(a.id)>=1&&Number(a.id)<=100)){alert('يوجد بالفعل بعض الرؤوس بأرقام من 1 إلى 100. لن يتم تغيير أي سجل.');return}
+ if(!confirm('سيتم إنشاء سجلات فارغة للأرقام من 1 إلى 100. تقدر تعدّل جنس ووصف كل رأس بعد ذلك. متابعة؟'))return;
+ const now=new Date().toISOString(); for(let id=1;id<=100;id++){if(!byId(id))animals.push({id,sex:'غير محدد',dob:'',mother:null,father:null,status:'موجودة',description:'',notes:'',createdAt:now});}
+ animals.sort((a,b)=>a.id-b.id);save();setTab('list');alert('تم تجهيز الأرقام 1 إلى 100. المواليد الجدد تبدأ أرقامهم من 101.');
+});
+function resetForm(){ $('animalForm').reset();$('editId').value='';$('animalId').disabled=false;$('animalFormTitle').textContent='إضافة رأس جديد';$('animalId').placeholder='تلقائي إذا تركته فارغًا';}
+$('cancelEdit').onclick=resetForm;
+$('animalForm').addEventListener('submit',e=>{
+ e.preventDefault();
+ const editing=$('editId').value;let id=Number($('animalId').value)||nextId();
+ if(animals.some(a=>Number(a.id)===id&&String(a.id)!==String(editing))){alert('هذا الرقم مستخدم بالفعل. اختر رقمًا آخر.');return}
+ const old=editing?byId(editing):null;
+ const a={id,sex:$('sex').value,dob:$('dob').value,mother:$('mother').value?Number($('mother').value):null,father:$('father').value?Number($('father').value):null,status:$('status').value,description:$('description').value.trim(),notes:$('notes').value.trim(),createdAt:old?.createdAt||new Date().toISOString()};
+ if(a.mother===id||a.father===id){alert('لا يمكن أن يكون الرأس أمًا أو أبًا لنفسه.');return}
+ if(old)animals=animals.filter(x=>Number(x.id)!==Number(editing));
+ animals.push(a);animals.sort((x,y)=>x.id-y.id);save();resetForm();setTab('list');
+});
+window.editAnimal=id=>{const a=byId(id);if(!a)return;setTab('add');$('editId').value=a.id;$('animalId').value=a.id;$('animalId').disabled=true;$('sex').value=a.sex;$('dob').value=a.dob||'';$('mother').value=a.mother||'';$('father').value=a.father||'';$('status').value=a.status||'موجودة';$('description').value=a.description||'';$('notes').value=a.notes||'';$('animalFormTitle').textContent='تعديل الرأس رقم '+a.id};
+window.deleteAnimal=id=>{if(!confirm('متأكد من حذف الرأس رقم '+id+'؟'))return;animals=animals.filter(a=>Number(a.id)!==Number(id));animals.forEach(a=>{if(Number(a.mother)===Number(id))a.mother=null;if(Number(a.father)===Number(id))a.father=null});save()};
+$('birthCount').addEventListener('change',()=>{const n=Number($('birthCount').value);$('sex2Wrap').classList.toggle('hidden',n<2);$('sex3Wrap').classList.toggle('hidden',n<3)});
+$('birthForm').addEventListener('submit',e=>{
+ e.preventDefault();const mother=Number($('birthMother').value);if(!mother||!byId(mother)){alert('اختر الأم أولًا.');return}
+ const n=Number($('birthCount').value),date=$('birthDate').value;if(!date){alert('أدخل تاريخ الولادة.');return}
+ const sexes=[$('birthSex1').value,$('birthSex2').value,$('birthSex3').value];const created=[];
+ for(let i=0;i<n;i++){const id=nextId();animals.push({id,sex:sexes[i],dob:date,mother,father:null,status:'موجودة',description:'',notes:$('birthNotes').value.trim(),createdAt:new Date().toISOString()});created.push(id)}
+ save();$('birthResult').innerHTML=`تم تسجيل المواليد بالأرقام: <strong>${created.map(x=>'#'+x).join('، ')}</strong> — أمهم رقم ${mother}.`; $('birthNotes').value='';
+});
+function familyNode(a,depth=0,seen=new Set()){
+ if(!a)return '';if(seen.has(Number(a.id)))return `<div class="muted">تم إيقاف العرض لتجنب تكرار دائري في النسب.</div>`;
+ const nextSeen=new Set(seen);nextSeen.add(Number(a.id));
+ const kids=animals.filter(x=>Number(x.mother)===Number(a.id)).sort((x,y)=>x.id-y.id);
+ return `<div class="animal"><div class="num">#${a.id} — ${esc(a.sex)}</div><div class="muted">${esc(a.description||'بدون وصف')} · ${esc(a.dob||'تاريخ الميلاد غير مسجل')}<br>الحالة: ${esc(a.status||'موجودة')}</div>${kids.length?`<div class="children"><div class="muted">الأبناء (${kids.length})</div>${kids.map(k=>familyNode(k,depth+1,nextSeen)).join('')}</div>`:''}</div>`;
+}
+function renderTree(){if(!$('familyTree'))return;const a=byId($('familyRoot').value);$('familyTree').innerHTML=a?familyNode(a):'<div class="empty">سجّل غنمك أولًا، ثم اختر رأسًا لعرض بناته وذريته.</div>'}
+$('familyRoot').addEventListener('change',renderTree);
+window.showFamily=id=>{setTab('family');$('familyRoot').value=id;renderTree()};
+$('export').onclick=()=>{try{const blob=new Blob([JSON.stringify({app:'سجل الحلال',version:1,exportedAt:new Date().toISOString(),animals},null,2)],{type:'application/json'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='نسخة-احتياطية-سجل-الحلال.json';a.style.display='none';document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(url);a.remove()},1500);showNotice('إذا لم يظهر ملف النسخة الاحتياطية، جرّب فتح التطبيق في Safari بدل المعاينة.');}catch(e){showNotice('تعذر تنزيل النسخة من هذه المعاينة. افتح التطبيق في Safari ثم حاول مرة أخرى.')}};
+$('importFile').addEventListener('change',async e=>{const f=e.target.files[0];if(!f)return;try{const data=JSON.parse(await f.text());const incoming=Array.isArray(data)?data:data.animals;if(!Array.isArray(incoming))throw new Error();if(!confirm('سيتم استبدال السجل الحالي بالنسخة المختارة. هل تريد المتابعة؟'))return;const ids=new Set();for(const a of incoming){if(!Number.isInteger(Number(a.id))||Number(a.id)<1||ids.has(Number(a.id)))throw new Error();ids.add(Number(a.id))}animals=incoming.map(a=>({...a,id:Number(a.id)}));save();alert('تم استرجاع النسخة بنجاح.')}catch(err){alert('الملف غير صالح أو لا يحتوي على نسخة سجل حلال صحيحة.')}e.target.value=''});
+$('clearAll').onclick=()=>{if(confirm('تحذير: سيتم حذف كل بيانات الغنم من هذا المتصفح. هل أنت متأكد؟')){animals=[];save()}};
+renderAll();
+if('serviceWorker' in navigator && /^https?:$/.test(location.protocol)){navigator.serviceWorker.register('./sw.js').catch(()=>{});}
+if(location.protocol==='file:' && /iPhone|iPad|iPod/i.test(navigator.userAgent)) showNotice('إذا كنت ترى هذه الصفحة داخل معاينة «الملفات» أو ChatGPT فقد لا تعمل الأزرار. افتح الملف في Safari من قائمة المشاركة إن أمكن. إذا بقيت المشكلة، نزّل نسخة احتياطية قبل إغلاق الصفحة.');
+</script>
+</body></html>
