@@ -4,35 +4,30 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#234b3b">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="سجل الحلال">
-<link rel="manifest" href="manifest.webmanifest">
-<link rel="apple-touch-icon" href="icon-192.png">
 <title>سجل الحلال</title>
 <style>
-:root{--green:#234b3b;--green2:#2f6b52;--cream:#f6f5ef;--line:#dce4dd;--ink:#18231d;--muted:#66756b;--red:#a43e35}
+:root{--green:#173f32;--green2:#2f6b52;--cream:#f3f6f2;--line:#dbe5dc;--ink:#17251d;--muted:#68796e;--red:#a43e35;--gold:#c49a4a}
 *{box-sizing:border-box}body{margin:0;background:var(--cream);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Tahoma,Arial,sans-serif}
-header{background:var(--green);color:white;padding:22px 17px 18px;border-radius:0 0 22px 22px}
+header{background:linear-gradient(135deg,#173f32 0%,#2f6b52 100%);color:white;padding:28px 18px 24px;border-radius:0 0 28px 28px;box-shadow:0 8px 22px #173f321c}
 h1{font-size:25px;margin:0 0 6px}header p{margin:0;opacity:.85;font-size:14px}
-main{max-width:850px;margin:auto;padding:14px 12px 35px}
+main{max-width:900px;margin:auto;padding:16px 12px 40px}
 .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:12px 0}
-.stat,.panel{background:white;border:1px solid var(--line);border-radius:15px;padding:13px}
+.stat,.panel{background:white;border:1px solid var(--line);border-radius:18px;padding:15px;box-shadow:0 3px 12px #1a3a2510}
 .stat small{display:block;color:var(--muted);font-size:12px}.stat strong{display:block;font-size:24px;margin-top:5px;color:var(--green)}
-.tabs{display:flex;gap:7px;overflow:auto;margin:12px 0}
-.tabs button{white-space:nowrap;border:1px solid var(--line);border-radius:999px;background:white;padding:10px 14px;font-size:14px;color:var(--ink)}
-.tabs button.active{background:var(--green);color:white;border-color:var(--green)}
+.tabs{display:flex;gap:7px;overflow:auto;margin:14px 0;padding:3px 1px 8px;scrollbar-width:thin}
+.tabs button{white-space:nowrap;border:1px solid var(--line);border-radius:13px;background:white;padding:11px 15px;font-size:14px;color:var(--ink);transition:all .15s}
+.tabs button.active{background:var(--green);color:white;border-color:var(--green);box-shadow:0 4px 10px #173f3228}
 h2{font-size:18px;margin:0 0 12px}.panel{margin-bottom:12px}
 .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
 label{display:block;font-size:13px;color:var(--muted);margin-bottom:5px}
-input,select,textarea{width:100%;border:1px solid #cfd9d1;background:#fff;border-radius:10px;padding:11px;font:inherit;font-size:15px;color:var(--ink)}
+input,select,textarea{width:100%;border:1px solid #cfd9d1;background:#fff;border-radius:12px;padding:12px;font:inherit;font-size:15px;color:var(--ink);outline:none}input:focus,select:focus,textarea:focus{border-color:var(--green2);box-shadow:0 0 0 3px #2f6b5218}
 textarea{min-height:75px;resize:vertical}.wide{grid-column:1/-1}
-button{cursor:pointer;font:inherit}.primary{background:var(--green);color:#fff;border:0;border-radius:11px;padding:12px 15px;font-weight:650}
+button{cursor:pointer;font:inherit}.primary{background:var(--green);color:#fff;border:0;border-radius:12px;padding:12px 16px;font-weight:700;box-shadow:0 3px 8px #173f3218}
 .secondary{background:#eef3ef;color:var(--green);border:1px solid var(--line);border-radius:10px;padding:9px 12px}
 .danger{background:#fff1ef;color:var(--red);border:1px solid #f0d0cb;border-radius:10px;padding:9px 12px}
 .actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
 .search{margin-bottom:10px}
-.animal{border:1px solid var(--line);background:#fff;border-radius:13px;padding:12px;margin:8px 0}
+.animal{border:1px solid var(--line);background:#fff;border-radius:15px;padding:14px;margin:9px 0}
 .animalTop{display:flex;justify-content:space-between;gap:10px;align-items:start}
 .num{font-weight:800;color:var(--green);font-size:17px}.muted{font-size:13px;color:var(--muted);margin-top:5px;line-height:1.7}
 .pill{display:inline-block;border-radius:999px;background:#eaf2ec;color:var(--green);padding:4px 8px;font-size:12px}
@@ -40,23 +35,25 @@ button{cursor:pointer;font:inherit}.primary{background:var(--green);color:#fff;b
 .empty{color:var(--muted);padding:18px 5px;text-align:center;font-size:14px}
 .hidden{display:none!important}.hint{font-size:13px;line-height:1.8;color:var(--muted)}
 footer{text-align:center;font-size:12px;color:var(--muted);padding:12px}
+@media print{body{background:#fff}header{border-radius:0;box-shadow:none}.tabs,.actions,button,#appNotice{display:none!important}main{max-width:none;padding:0}.panel,.stat,.animal{box-shadow:none;break-inside:avoid}.tab.hidden{display:none!important}}
 @media(max-width:480px){.grid{grid-template-columns:1fr}.stats{gap:6px}.stat{padding:10px}.stat strong{font-size:21px}.wide{grid-column:auto}}
 </style>
 </head>
 <body>
-<header><h1>🐑 سجل الحلال</h1><p>ترقيم الغنم · الولادات · شجرة النسب</p></header>
+<header><h1>🐑 سجل الحلال</h1><p>ترقيم الحلال · الحسابات · التلقيح والولادات والفطام</p></header>
 <main>
 <div id="appNotice" role="status" style="display:none;background:#fff8df;border:1px solid #e8d89a;color:#5e4b12;padding:12px;border-radius:12px;line-height:1.8;margin:10px 0"></div>
+<section class="panel" style="background:linear-gradient(135deg,#ffffff,#f7faf7);margin-top:12px"><h2>أهلًا بك في سجل الحلال</h2><p class="hint">تابع القطيع، مواعيد التكاثر، المصروفات والمخزون من مكان واحد.</p><div id="reminders" class="hint">لا توجد تنبيهات حالية.</div></section>
 <div class="stats">
  <div class="stat"><small>إجمالي المسجل</small><strong id="total">0</strong></div>
  <div class="stat"><small>إناث</small><strong id="females">0</strong></div>
  <div class="stat"><small>مواليد مسجلون</small><strong id="babies">0</strong></div>
 </div>
 <nav class="tabs">
- <button class="active" data-tab="list">الغنم</button><button data-tab="add">إضافة رأس</button><button data-tab="birth">تسجيل ولادة</button><button data-tab="family">شجرة العائلة</button><button data-tab="backup">حفظ واسترجاع</button>
+ <button class="active" data-tab="list">🐑 الغنم</button><button data-tab="add">＋ إضافة رأس</button><button data-tab="birth">🐣 الولادات</button><button data-tab="family">🌿 النسب</button><button data-tab="finance">💰 الحسابات</button><button data-tab="breeding">📅 التكاثر</button><button data-tab="health">🩺 الصحة والعلاج</button><button data-tab="reports">📊 التقارير</button><button data-tab="inventory">📦 المخزون</button><button data-tab="backup">💾 النسخ الاحتياطي</button>
 </nav>
 <section id="list" class="tab panel">
- <h2>سجل الغنم</h2><p class="hint">أول مرة؟ اضغط «تجهيز الأرقام 1–100» لإنشاء سجلات فارغة، ثم عدّل جنس ووصف كل رأس. المواليد التالية تأخذ أرقامًا من 101 فما بعد.</p><div class="actions" style="margin-bottom:10px"><button class="secondary" id="setup100" type="button">تجهيز الأرقام 1–100</button></div><input id="search" class="search" placeholder="ابحث برقم الرأس أو الوصف…">
+ <h2>سجل الغنم</h2><input id="search" class="search" placeholder="ابحث برقم الرأس أو الوصف…">
  <div id="animalList"></div>
 </section>
 <section id="add" class="tab panel hidden">
@@ -64,7 +61,7 @@ footer{text-align:center;font-size:12px;color:var(--muted);padding:12px}
  <form id="animalForm"><input type="hidden" id="editId">
  <div class="grid">
   <div><label>رقم الرأس</label><input id="animalId" type="number" min="1" placeholder="تلقائي إذا تركته فارغًا"></div>
-  <div><label>الجنس</label><select id="sex"><option value="غير محدد">غير محدد</option><option value="أنثى">أنثى</option><option value="ذكر">ذكر</option></select></div>
+  <div><label>الجنس</label><select id="sex"><option value="أنثى">أنثى</option><option value="ذكر">ذكر</option></select></div>
   <div><label>تاريخ الميلاد</label><input id="dob" type="date"></div>
   <div><label>رقم الأم</label><select id="mother"><option value="">غير معروف / لا يوجد</option></select></div>
   <div><label>رقم الأب</label><select id="father"><option value="">غير معروف / لا يوجد</option></select></div>
@@ -92,6 +89,65 @@ footer{text-align:center;font-size:12px;color:var(--muted);padding:12px}
 <section id="family" class="tab panel hidden">
  <h2>شجرة العائلة</h2><label>اختر الرأس</label><select id="familyRoot"></select><div id="familyTree"></div>
 </section>
+<section id="finance" class="tab panel hidden">
+ <h2>الحسابات المالية</h2>
+ <div class="stats">
+  <div class="stat"><small>رأس المال</small><strong id="capitalTotal">0 ر.س</strong></div>
+  <div class="stat"><small>إجمالي الإيرادات</small><strong id="incomeTotal">0 ر.س</strong></div>
+  <div class="stat"><small>إجمالي المصروفات</small><strong id="expenseTotal">0 ر.س</strong></div>
+ </div>
+ <div class="stat" style="margin-bottom:12px"><small>صافي الحركة (الإيرادات − المصروفات)</small><strong id="netTotal">0 ر.س</strong></div>
+ <form id="capitalForm" class="animal"><h2>تحديد رأس المال</h2><label>رأس المال عند بداية التسجيل (ريال)</label><input id="capitalInput" type="number" min="0" step="0.01" placeholder="مثال: 15000" required><div class="actions"><button class="primary" type="submit">حفظ رأس المال</button></div><p class="hint">رأس المال قيمة مستقلة، ولا يُضاف تلقائيًا إلى الإيرادات حتى لا يتكرر احتسابه.</p></form>
+ <form id="transactionForm" class="animal"><h2>إضافة إيراد أو مصروف</h2><div class="grid">
+  <div><label>نوع العملية</label><select id="txnType"><option value="expense">مصروف</option><option value="income">إيراد</option></select></div>
+  <div><label>المبلغ (ريال)</label><input id="txnAmount" type="number" min="0.01" step="0.01" required placeholder="0.00"></div>
+  <div><label>التصنيف</label><select id="txnCategory"><option>شراء غنم</option><option>بيع غنم أو مواليد</option><option>أعلاف</option><option>أدوية وعلاج</option><option>أجور عمال</option><option>ماء وكهرباء</option><option>معدات وتجهيزات</option><option>نقل</option><option>أخرى</option></select></div>
+  <div><label>التاريخ</label><input id="txnDate" type="date" required></div>
+  <div class="wide"><label>ربط العملية برأس (اختياري)</label><select id="txnAnimal"><option value="">مصروف/إيراد عام للقطيع</option></select></div><div class="wide"><label>ملاحظات</label><input id="txnNote" placeholder="مثال: شراء 10 أكياس شعير"></div>
+ </div><div class="actions"><button class="primary" type="submit">حفظ العملية</button></div></form>
+ <h2>سجل العمليات</h2><div id="transactionList"></div>
+</section>
+<section id="breeding" class="tab panel hidden">
+ <h2>متابعة التلقيح والولادة</h2>
+ <p class="hint">مدة حمل المعز غالبًا نحو 150 يومًا (قرابة 5 أشهر). أدخل تاريخ التلقيح/تعرّض الأنثى للفحل ليحسب البرنامج موعد الولادة المتوقع. الموعد تقديري وقد يتقدم أو يتأخر.</p>
+ <form id="breedingForm" class="animal"><div class="grid">
+  <div class="wide"><label>الأم / الأنثى</label><select id="breedFemale" required></select></div>
+  <div><label>تاريخ التلقيح أو إدخال الفحل</label><input id="matingDate" type="date" required></div>
+  <div><label>الفحل (اختياري)</label><select id="breedMale"><option value="">غير محدد</option></select></div>
+  <div class="wide"><label>ملاحظات</label><input id="breedNote" placeholder="مثال: شوهد التلقيح أو ملاحظات على الأنثى"></div>
+ </div><div class="actions"><button class="primary" type="submit">حفظ موعد التلقيح</button></div><div id="duePreview" class="hint"></div></form>
+ <h2>جدول المتابعة</h2><div id="breedingList"></div>
+ <div class="animal"><h2>متى أفطم المولود؟</h2><p class="hint">غالبًا يُفطم الجدي بعمر 8–12 أسبوعًا (نحو 60–90 يومًا)، بشرط أن يكون بصحة جيدة ويأكل العلف/العلف المركز ويشرب الماء بشكل مستقل. لا تعتمد على العمر وحده إذا كان ضعيفًا أو نموه غير جيد؛ استشر بيطريًا عند الحاجة.</p><label>احسب موعد الفطام من تاريخ الميلاد</label><input id="weanDob" type="date"><div id="weanResult" class="hint"></div></div>
+ <div class="animal"><h2>متى أعيد الأم للفحل بعد الولادة؟</h2><p class="hint">لا يوجد موعد واحد يناسب كل المعز. عمليًا، انتظر حتى تستعيد الأم حالتها ووزنها وتكون بصحة جيدة، وغالبًا يُنظر في التلقيح بعد الفطام أو بعد نحو 2–3 أشهر من الولادة حسب السلالة والتغذية والموسم. لا تُدخلها للفحل إذا كانت هزيلة أو مريضة، واستشر الطبيب البيطري إذا كانت الولادة صعبة أو ظهرت مضاعفات.</p></div>
+</section>
+
+<section id="health" class="tab panel hidden">
+ <h2>🩺 السجل الصحي والعلاجي</h2>
+ <p class="hint">سجّل الحالة والعلاج والجرعة وتاريخ المتابعة. احسب فترة التحريم حسب نشرة الدواء والطبيب البيطري؛ لا تعتمد على تقدير عام.</p>
+ <form id="healthForm" class="animal"><div class="grid">
+  <div class="wide"><label>الرأس</label><select id="healthAnimal" required></select></div>
+  <div><label>تاريخ الحالة/العلاج</label><input id="healthDate" type="date" required></div>
+  <div><label>نوع الحالة</label><select id="healthType"><option>علاج</option><option>تحصين</option><option>مرض/أعراض</option><option>فحص بيطري</option><option>متابعة</option></select></div>
+  <div class="wide"><label>اسم المرض أو الدواء</label><input id="healthName" required placeholder="اسم الحالة أو العلاج" /></div>
+  <div><label>الجرعة وطريقة الاستخدام</label><input id="healthDose" placeholder="حسب وصف الطبيب" /></div>
+  <div><label>موعد المتابعة (اختياري)</label><input id="healthFollow" type="date" /></div>
+  <div><label>تكلفة العلاج (ريال)</label><input id="healthCost" type="number" min="0" step="0.01" value="0" /></div>
+  <div><label>فترة التحريم بالأيام (حسب النشرة)</label><input id="healthWithdrawal" type="number" min="0" step="1" placeholder="إن وجدت" /></div>
+  <div class="wide"><label>ملاحظات</label><textarea id="healthNotes" placeholder="الأعراض، استجابة الرأس، تعليمات البيطري..."></textarea></div>
+ </div><div class="actions"><button class="primary" type="submit">حفظ السجل الصحي</button></div></form>
+ <h2>السجلات الصحية</h2><div id="healthList"></div>
+</section>
+<section id="reports" class="tab panel hidden">
+ <h2>📊 التقارير والأرباح</h2>
+ <p class="hint">تظهر تكلفة وربحية الرأس من العمليات المالية التي ربطتها به فقط. المصروفات العامة للقطيع لا تُوزّع تلقائيًا على الرؤوس.</p>
+ <div class="animal"><h2>تقرير شهري</h2><label>اختر الشهر</label><input id="reportMonth" type="month"><div id="monthlyReport"></div><div class="actions"><button class="primary" type="button" onclick="window.print()">طباعة / حفظ PDF</button></div></div>
+ <h2>ربحية كل رأس</h2><div id="profitList"></div>
+</section>
+<section id="inventory" class="tab panel hidden">
+ <h2>مخزون الأعلاف والأدوية</h2><p class="hint">سجّل الكمية الحالية، ثم حدّثها عند الشراء أو الاستخدام. يظهر تنبيه عند وصول الكمية إلى الحد الأدنى.</p>
+ <form id="stockForm" class="animal"><div class="grid"><div class="wide"><label>اسم الصنف</label><input id="stockName" required placeholder="مثال: شعير، برسيم، دواء..." /></div><div><label>النوع</label><select id="stockType"><option>علف</option><option>دواء</option><option>مستلزمات</option><option>أخرى</option></select></div><div><label>الكمية الحالية</label><input id="stockQty" type="number" min="0" step="0.01" required placeholder="0" /></div><div><label>وحدة القياس</label><select id="stockUnit"><option>كيس</option><option>كيلو</option><option>طن</option><option>علبة</option><option>عبوة</option><option>لتر</option><option>قطعة</option></select></div><div><label>حد التنبيه عنده</label><input id="stockMin" type="number" min="0" step="0.01" value="1" required /></div></div><div class="actions"><button class="primary" type="submit">إضافة الصنف / تحديثه</button></div></form>
+ <div id="stockList"></div>
+</section>
 <section id="backup" class="tab panel hidden">
  <h2>حفظ بياناتك</h2>
  <p class="hint">البيانات محفوظة في هذا المتصفح على هذا الجهاز. خذ نسخة احتياطية بانتظام، خصوصًا قبل تغيير الجهاز أو مسح بيانات المتصفح.</p>
@@ -103,21 +159,25 @@ footer{text-align:center;font-size:12px;color:var(--muted);padding:12px}
 <script>
 const $=id=>document.getElementById(id);
 const STORE='halal_register_v1';
-let animals=[];
+const FINANCE_STORE='halal_finance_v1';
+const BREEDING_STORE='halal_breeding_v1';
+const STOCK_STORE='halal_stock_v1';
+const HEALTH_STORE='halal_health_v1';
+let animals=[];let transactions=[];let capital=0;let breedings=[];let stock=[];let healthLogs=[];
 let memoryOnly=false;
 function showNotice(message){const el=$('appNotice');el.textContent=message;el.style.display='block'}
 function readSaved(){
   try { const raw=window.localStorage.getItem(STORE); return raw ? JSON.parse(raw) : null; }
   catch(e) { memoryOnly=true; return null; }
 }
-try { const stored=readSaved(); if(Array.isArray(stored)) animals=stored; }
+try { const stored=readSaved(); if(Array.isArray(stored)) animals=stored; const f=JSON.parse(localStorage.getItem(FINANCE_STORE)||'{}'); transactions=Array.isArray(f.transactions)?f.transactions:[]; capital=Number(f.capital)||0; const b=JSON.parse(localStorage.getItem(BREEDING_STORE)||'[]'); breedings=Array.isArray(b)?b:[]; const st=JSON.parse(localStorage.getItem(STOCK_STORE)||'[]'); stock=Array.isArray(st)?st:[]; const hl=JSON.parse(localStorage.getItem(HEALTH_STORE)||'[]'); healthLogs=Array.isArray(hl)?hl:[]; }
 catch(e) { animals=[]; memoryOnly=true; }
+function saveFinance(){try{localStorage.setItem(FINANCE_STORE,JSON.stringify({capital,transactions}));localStorage.setItem(BREEDING_STORE,JSON.stringify(breedings));localStorage.setItem(STOCK_STORE,JSON.stringify(stock));localStorage.setItem(HEALTH_STORE,JSON.stringify(healthLogs));}catch(e){memoryOnly=true;showNotice('تعذر حفظ بعض البيانات بشكل دائم في هذا المتصفح؛ نزّل نسخة احتياطية وجرّب فتح التطبيق في Safari.')}renderFinance();renderBreeding();renderStock();renderReminders();renderHealth();renderReports();}
 const save=()=>{
   try { window.localStorage.setItem(STORE,JSON.stringify(animals)); memoryOnly=false; }
   catch(e) { memoryOnly=true; }
   renderAll();
-  if(memoryOnly) showNotice('تنبيه: المتصفح منع الحفظ الدائم. نزّل نسخة احتياطية الآن، وشغّل الموقع من رابط HTTPS ثم أضفه إلى الشاشة الرئيسية.');
-  else showNotice('تم حفظ التغييرات على هذا الجهاز. خذ نسخة احتياطية بشكل دوري.');
+  if(memoryOnly) showNotice('تم تحديث السجل في هذه الجلسة، لكن المتصفح منع الحفظ الدائم. افتح الملف في Safari أو أضف التطبيق إلى الشاشة الرئيسية، ثم نزّل نسخة احتياطية من تبويب «حفظ واسترجاع».');
 };
 const nextId=()=>{let n=1;const used=new Set(animals.map(a=>Number(a.id)));while(used.has(n))n++;return n};
 const byId=id=>animals.find(a=>Number(a.id)===Number(id));
@@ -129,9 +189,10 @@ function renderAll(){
  $('total').textContent=animals.length;
  $('females').textContent=animals.filter(a=>a.sex==='أنثى'&&a.status!=='مباعة'&&a.status!=='نافقة').length;
  $('babies').textContent=animals.filter(a=>a.mother).length;
- ['mother','father','birthMother','familyRoot'].forEach(id=>optionsFor($(id),id==='mother'||id==='father'));
+ ['mother','father','birthMother','familyRoot','healthAnimal'].forEach(id=>optionsFor($(id),id==='mother'||id==='father'));
+ const oldTxn=$('txnAnimal').value;$('txnAnimal').innerHTML='<option value="">مصروف/إيراد عام للقطيع</option>'+animals.slice().sort((a,b)=>a.id-b.id).map(a=>`<option value="${a.id}">#${a.id} — ${esc(a.description||a.sex)}</option>`).join('');if([...$('txnAnimal').options].some(o=>o.value===oldTxn))$('txnAnimal').value=oldTxn;
  if(!$('familyRoot').value&&animals.length)$('familyRoot').value=animals[0].id;
- renderList();renderTree();
+ renderList();renderTree();renderFinance();renderBreeding();renderStock();renderReminders();renderHealth();renderReports();
 }
 function renderList(){
  const q=$('search').value.trim().toLowerCase();
@@ -139,12 +200,6 @@ function renderList(){
  $('animalList').innerHTML=arr.length?arr.map(a=>`<article class="animal"><div class="animalTop"><div><div class="num">رقم ${a.id} <span class="pill">${esc(a.sex)}</span></div><div class="muted">${esc(a.description||'بدون وصف')}<br>الأم: ${a.mother?'#'+a.mother:'غير محددة'} · الأب: ${a.father?'#'+a.father:'غير محدد'}<br>الميلاد: ${esc(a.dob||'غير مسجل')} · الحالة: ${esc(a.status||'موجودة')}</div></div><button class="secondary" onclick="editAnimal(${a.id})">تعديل</button></div><div class="actions"><button class="secondary" onclick="showFamily(${a.id})">عرض العائلة</button><button class="danger" onclick="deleteAnimal(${a.id})">حذف</button></div></article>`).join(''):'<div class="empty">ما فيه رؤوس مسجلة تطابق البحث. أضف أول رأس من تبويب «إضافة رأس».</div>';
 }
 $('search').addEventListener('input',renderList);
-$('setup100').addEventListener('click',()=>{
- if(animals.some(a=>Number(a.id)>=1&&Number(a.id)<=100)){alert('يوجد بالفعل بعض الرؤوس بأرقام من 1 إلى 100. لن يتم تغيير أي سجل.');return}
- if(!confirm('سيتم إنشاء سجلات فارغة للأرقام من 1 إلى 100. تقدر تعدّل جنس ووصف كل رأس بعد ذلك. متابعة؟'))return;
- const now=new Date().toISOString(); for(let id=1;id<=100;id++){if(!byId(id))animals.push({id,sex:'غير محدد',dob:'',mother:null,father:null,status:'موجودة',description:'',notes:'',createdAt:now});}
- animals.sort((a,b)=>a.id-b.id);save();setTab('list');alert('تم تجهيز الأرقام 1 إلى 100. المواليد الجدد تبدأ أرقامهم من 101.');
-});
 function resetForm(){ $('animalForm').reset();$('editId').value='';$('animalId').disabled=false;$('animalFormTitle').textContent='إضافة رأس جديد';$('animalId').placeholder='تلقائي إذا تركته فارغًا';}
 $('cancelEdit').onclick=resetForm;
 $('animalForm').addEventListener('submit',e=>{
@@ -176,11 +231,33 @@ function familyNode(a,depth=0,seen=new Set()){
 function renderTree(){if(!$('familyTree'))return;const a=byId($('familyRoot').value);$('familyTree').innerHTML=a?familyNode(a):'<div class="empty">سجّل غنمك أولًا، ثم اختر رأسًا لعرض بناته وذريته.</div>'}
 $('familyRoot').addEventListener('change',renderTree);
 window.showFamily=id=>{setTab('family');$('familyRoot').value=id;renderTree()};
-$('export').onclick=()=>{try{const blob=new Blob([JSON.stringify({app:'سجل الحلال',version:1,exportedAt:new Date().toISOString(),animals},null,2)],{type:'application/json'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='نسخة-احتياطية-سجل-الحلال.json';a.style.display='none';document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(url);a.remove()},1500);showNotice('إذا لم يظهر ملف النسخة الاحتياطية، جرّب فتح التطبيق في Safari بدل المعاينة.');}catch(e){showNotice('تعذر تنزيل النسخة من هذه المعاينة. افتح التطبيق في Safari ثم حاول مرة أخرى.')}};
-$('importFile').addEventListener('change',async e=>{const f=e.target.files[0];if(!f)return;try{const data=JSON.parse(await f.text());const incoming=Array.isArray(data)?data:data.animals;if(!Array.isArray(incoming))throw new Error();if(!confirm('سيتم استبدال السجل الحالي بالنسخة المختارة. هل تريد المتابعة؟'))return;const ids=new Set();for(const a of incoming){if(!Number.isInteger(Number(a.id))||Number(a.id)<1||ids.has(Number(a.id)))throw new Error();ids.add(Number(a.id))}animals=incoming.map(a=>({...a,id:Number(a.id)}));save();alert('تم استرجاع النسخة بنجاح.')}catch(err){alert('الملف غير صالح أو لا يحتوي على نسخة سجل حلال صحيحة.')}e.target.value=''});
+function renderStock(){if(!$('stockList'))return;$('stockList').innerHTML=stock.length?stock.slice().sort((a,b)=>a.name.localeCompare(b.name,'ar')).map(x=>`<article class="animal"><div class="animalTop"><div><div class="num">${esc(x.name)} <span class="pill">${esc(x.type)}</span></div><div class="muted">الكمية: <strong>${Number(x.qty).toLocaleString('ar-SA')} ${esc(x.unit)}</strong> · حد التنبيه: ${Number(x.min).toLocaleString('ar-SA')} ${esc(x.unit)}<br>${Number(x.qty)<=Number(x.min)?'<span style="color:#a43e35;font-weight:700">⚠️ المخزون منخفض — يحتاج متابعة</span>':'المخزون ضمن الحد المحدد'}</div></div><button class="danger" onclick="deleteStock('${x.id}')">حذف</button></div><div class="actions"><button class="secondary" onclick="adjustStock('${x.id}',1)">+ إضافة كمية</button><button class="secondary" onclick="adjustStock('${x.id}',-1)">− استخدام كمية</button></div></article>`).join(''):'<div class="empty">لا يوجد مخزون مسجل. أضف أول صنف من النموذج أعلاه.</div>'}
+$('stockForm').addEventListener('submit',e=>{e.preventDefault();const name=$('stockName').value.trim();const old=stock.find(x=>x.name.toLowerCase()===name.toLowerCase()&&x.unit===$('stockUnit').value);if(old){old.qty=Number($('stockQty').value);old.min=Number($('stockMin').value);old.type=$('stockType').value}else{stock.push({id:Date.now().toString(36)+Math.random().toString(36).slice(2,5),name,type:$('stockType').value,qty:Number($('stockQty').value),unit:$('stockUnit').value,min:Number($('stockMin').value)})}saveFinance();$('stockForm').reset();$('stockMin').value='1';});
+window.adjustStock=(id,mode)=>{const x=stock.find(y=>y.id===id);if(!x)return;const n=Number(prompt(mode===1?'كمية الشراء/الإضافة؟':'كمية الاستخدام؟','1'));if(!Number.isFinite(n)||n<=0)return;if(mode<0&&n>x.qty){alert('الكمية المستخدمة أكبر من المخزون المتاح.');return}x.qty=Number((x.qty+mode*n).toFixed(2));saveFinance();};
+window.deleteStock=id=>{if(confirm('حذف هذا الصنف من المخزون؟')){stock=stock.filter(x=>x.id!==id);saveFinance()}};
+function renderReminders(){const el=$('reminders');if(!el)return;const list=[];breedings.forEach(b=>{const left=daysUntil(b.dueDate);if(left<=14)list.push({date:b.dueDate,text:`ولادة متوقعة للأم #${b.female}`,left})});stock.filter(x=>Number(x.qty)<=Number(x.min)).forEach(x=>list.push({date:'',text:`مخزون منخفض: ${x.name}`,left:0}));const near=breedings.filter(b=>{const d=daysUntil(b.dueDate);return d>=0&&d<=14}).length;el.innerHTML=list.length?'<strong>تنبيهات تحتاج انتباه:</strong><ul>'+list.slice(0,8).map(x=>`<li>${esc(x.text)}${x.date?' — '+esc(x.date)+(x.left===0?' (اليوم)':` (بعد ${x.left} يوم)`):''}</li>`).join('')+'</ul>':'لا توجد تنبيهات قريبة حاليًا. أضف مواعيد التلقيح وحدود المخزون لتظهر التنبيهات هنا.'}
+function money(n){return Number(n||0).toLocaleString('ar-SA',{maximumFractionDigits:2})+' ر.س'}
+function datePlus(date,days){if(!date)return '';const d=new Date(date+'T12:00:00');d.setDate(d.getDate()+days);return d.toISOString().slice(0,10)}
+function daysUntil(date){if(!date)return '';const a=new Date();a.setHours(0,0,0,0);const b=new Date(date+'T00:00:00');return Math.round((b-a)/86400000)}
+function renderFinance(){if(!$('capitalTotal'))return;const inc=transactions.filter(t=>t.type==='income').reduce((s,t)=>s+Number(t.amount||0),0);const exp=transactions.filter(t=>t.type==='expense').reduce((s,t)=>s+Number(t.amount||0),0);$('capitalTotal').textContent=money(capital);$('incomeTotal').textContent=money(inc);$('expenseTotal').textContent=money(exp);$('netTotal').textContent=money(inc-exp);$('capitalInput').value=capital||'';const arr=transactions.slice().sort((a,b)=>(b.date||'').localeCompare(a.date||''));$('transactionList').innerHTML=arr.length?arr.map(t=>`<article class="animal"><div class="animalTop"><div><div class="num">${t.type==='income'?'إيراد':'مصروف'} · ${money(t.amount)}</div><div class="muted">${esc(t.date||'')} · ${esc(t.category||'أخرى')}<br>${t.animalId?'الرأس: #'+esc(t.animalId)+' · ':''}${esc(t.note||'بدون ملاحظات')}</div></div><button class="danger" onclick="deleteTransaction('${t.id}')">حذف</button></div></article>`).join(''):'<div class="empty">ما فيه عمليات مالية مسجلة حتى الآن.</div>'}
+$('capitalForm').addEventListener('submit',e=>{e.preventDefault();capital=Number($('capitalInput').value)||0;saveFinance();alert('تم حفظ رأس المال.');});
+$('transactionForm').addEventListener('submit',e=>{e.preventDefault();const amount=Number($('txnAmount').value);if(!(amount>0)){alert('أدخل مبلغًا صحيحًا.');return}transactions.push({id:Date.now().toString(36)+Math.random().toString(36).slice(2,6),type:$('txnType').value,amount,category:$('txnCategory').value,date:$('txnDate').value,note:$('txnNote').value.trim(),animalId:$('txnAnimal').value?Number($('txnAnimal').value):null});saveFinance();$('txnAmount').value='';$('txnNote').value='';alert('تم حفظ العملية.');});
+window.deleteTransaction=id=>{if(confirm('حذف هذه العملية المالية؟')){transactions=transactions.filter(t=>t.id!==id);saveFinance()}};
+function renderBreeding(){if(!$('breedFemale'))return;const females=animals.filter(a=>a.sex==='أنثى'&&a.status!=='مباعة'&&a.status!=='نافقة');const males=animals.filter(a=>a.sex==='ذكر'&&a.status!=='مباعة'&&a.status!=='نافقة');const fill=(el,items,blank)=>{const old=el.value;el.innerHTML=(blank?'<option value="">غير محدد</option>':'<option value="">اختر الأنثى</option>')+items.map(a=>`<option value="${a.id}">#${a.id} — ${esc(a.description||a.sex)}</option>`).join('');if([...el.options].some(o=>o.value===old))el.value=old};fill($('breedFemale'),females,false);fill($('breedMale'),males,true);const arr=breedings.slice().sort((a,b)=>(a.dueDate||'').localeCompare(b.dueDate||''));$('breedingList').innerHTML=arr.length?arr.map(b=>{const a=byId(b.female);const left=daysUntil(b.dueDate);return `<article class="animal"><div class="num">الأم #${b.female}${a?' — '+esc(a.description||''):''}</div><div class="muted">التلقيح: ${esc(b.matingDate)} · الفحل: ${b.male?'#'+b.male:'غير محدد'}<br>الولادة المتوقعة: <strong>${esc(b.dueDate)}</strong> · ${left<0?'تجاوز الموعد المتوقع بـ '+Math.abs(left)+' يوم':left===0?'الموعد المتوقع اليوم':'متبقي '+left+' يوم'}<br>${esc(b.note||'')}</div><div class="actions"><button class="danger" onclick="deleteBreeding('${b.id}')">حذف الموعد</button></div></article>`}).join(''):'<div class="empty">أضف تاريخ التلقيح لتظهر مواعيد الولادة المتوقعة هنا.</div>';const d=$('matingDate').value;$('duePreview').textContent=d?'موعد الولادة المتوقع تقريبًا: '+datePlus(d,150)+' (بعد 150 يومًا).':''}
+$('matingDate').addEventListener('input',renderBreeding);$('weanDob').addEventListener('input',()=>{const d=$('weanDob').value;$('weanResult').textContent=d?`موعد الفطام التقريبي: ${datePlus(d,60)} إلى ${datePlus(d,90)} (عمر 60–90 يومًا).`:''});
+$('breedingForm').addEventListener('submit',e=>{e.preventDefault();const female=Number($('breedFemale').value),matingDate=$('matingDate').value;if(!female||!matingDate){alert('اختر الأنثى وأدخل تاريخ التلقيح.');return}breedings.push({id:Date.now().toString(36)+Math.random().toString(36).slice(2,6),female,male:$('breedMale').value?Number($('breedMale').value):null,matingDate,dueDate:datePlus(matingDate,150),note:$('breedNote').value.trim()});saveFinance();$('breedNote').value='';alert('تم حفظ موعد التلقيح والولادة المتوقع.');});
+window.deleteBreeding=id=>{if(confirm('حذف موعد التلقيح هذا؟')){breedings=breedings.filter(b=>b.id!==id);saveFinance()}};
+
+function renderHealth(){if(!$('healthList'))return;const arr=healthLogs.slice().sort((a,b)=>(b.date||'').localeCompare(a.date||''));$('healthList').innerHTML=arr.length?arr.map(h=>{const due=h.withdrawal?datePlus(h.date,Number(h.withdrawal)):'';const follow=h.follow?daysUntil(h.follow):null;return `<article class="animal"><div class="animalTop"><div><div class="num">الرأس #${esc(h.animalId)} <span class="pill">${esc(h.type)}</span></div><div class="muted">التاريخ: ${esc(h.date)} · ${esc(h.name)}<br>الجرعة: ${esc(h.dose||'غير مسجلة')} · التكلفة: ${money(h.cost)}<br>${h.follow?'المتابعة: '+esc(h.follow)+(follow<0?' (متأخرة)':follow===0?' (اليوم)':' (بعد '+follow+' يوم)')+'<br>':''}${h.withdrawal?'فترة التحريم المسجلة: '+h.withdrawal+' يوم — التاريخ المحسوب: '+due+' (تحقق من نشرة الدواء/البيطري)<br>':''}${esc(h.notes||'')}</div></div><button class="danger" onclick="deleteHealth('${h.id}')">حذف</button></div></article>`}).join(''):'<div class="empty">لا توجد سجلات صحية بعد. ابدأ بإضافة علاج أو تحصين.</div>'}
+$('healthForm').addEventListener('submit',e=>{e.preventDefault();const animalId=Number($('healthAnimal').value);if(!animalId){alert('اختر الرأس أولًا.');return}const cost=Number($('healthCost').value)||0;const h={id:Date.now().toString(36)+Math.random().toString(36).slice(2,6),animalId,date:$('healthDate').value,type:$('healthType').value,name:$('healthName').value.trim(),dose:$('healthDose').value.trim(),follow:$('healthFollow').value,withdrawal:$('healthWithdrawal').value===''?null:Number($('healthWithdrawal').value),cost,notes:$('healthNotes').value.trim()};healthLogs.push(h);if(cost>0)transactions.push({id:Date.now().toString(36)+Math.random().toString(36).slice(2,5),type:'expense',amount:cost,category:'أدوية وعلاج',date:h.date,note:'علاج للرأس #'+animalId+' — '+h.name,animalId});saveFinance();$('healthName').value='';$('healthDose').value='';$('healthFollow').value='';$('healthWithdrawal').value='';$('healthCost').value='0';$('healthNotes').value='';alert('تم حفظ السجل الصحي.' )});
+window.deleteHealth=id=>{if(confirm('حذف هذا السجل الصحي؟ (لن تُحذف العملية المالية المرتبطة تلقائيًا)')){healthLogs=healthLogs.filter(h=>h.id!==id);saveFinance()}};
+function renderReports(){if(!$('profitList'))return;const month=$('reportMonth').value||new Date().toISOString().slice(0,7);const tx=transactions.filter(t=>(t.date||'').slice(0,7)===month);const inc=tx.filter(t=>t.type==='income').reduce((s,t)=>s+Number(t.amount||0),0);const exp=tx.filter(t=>t.type==='expense').reduce((s,t)=>s+Number(t.amount||0),0);$('monthlyReport').innerHTML=`<div class="stats"><div class="stat"><small>إيرادات الشهر</small><strong>${money(inc)}</strong></div><div class="stat"><small>مصروفات الشهر</small><strong>${money(exp)}</strong></div><div class="stat"><small>صافي الشهر</small><strong>${money(inc-exp)}</strong></div></div><p class="hint">عدد العمليات: ${tx.length} · الشهر المحدد: ${esc(month)}</p>`;const arr=animals.filter(a=>a.status!=='مباعة'&&a.status!=='نافقة').map(a=>{const own=transactions.filter(t=>Number(t.animalId)===Number(a.id));const income=own.filter(t=>t.type==='income').reduce((s,t)=>s+Number(t.amount||0),0);const expense=own.filter(t=>t.type==='expense').reduce((s,t)=>s+Number(t.amount||0),0);return {a,income,expense,net:income-expense}}).sort((a,b)=>a.net-b.net);$('profitList').innerHTML=arr.length?arr.map(x=>`<article class="animal"><div class="num">الرأس #${x.a.id} · ${esc(x.a.description||x.a.sex)}</div><div class="muted">الإيرادات المرتبطة: ${money(x.income)}<br>المصروفات المرتبطة: ${money(x.expense)}<br><strong>الصافي المسجل: ${money(x.net)}</strong></div></article>`).join(''):'<div class="empty">أضف رؤوسًا إلى السجل لعرض الربحية.</div>'}
+$('reportMonth').addEventListener('change',renderReports);
+
+$('export').onclick=()=>{try{const blob=new Blob([JSON.stringify({app:'سجل الحلال',version:3,exportedAt:new Date().toISOString(),animals,capital,transactions,breedings,stock,healthLogs},null,2)],{type:'application/json'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='نسخة-احتياطية-سجل-الحلال.json';a.style.display='none';document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(url);a.remove()},1500);showNotice('إذا لم يظهر ملف النسخة الاحتياطية، جرّب فتح التطبيق في Safari بدل المعاينة.');}catch(e){showNotice('تعذر تنزيل النسخة من هذه المعاينة. افتح التطبيق في Safari ثم حاول مرة أخرى.')}};
+$('importFile').addEventListener('change',async e=>{const f=e.target.files[0];if(!f)return;try{const data=JSON.parse(await f.text());const incoming=Array.isArray(data)?data:data.animals;if(!Array.isArray(incoming))throw new Error();if(!confirm('سيتم استبدال السجل الحالي بالنسخة المختارة. هل تريد المتابعة؟'))return;const ids=new Set();for(const a of incoming){if(!Number.isInteger(Number(a.id))||Number(a.id)<1||ids.has(Number(a.id)))throw new Error();ids.add(Number(a.id))}animals=incoming.map(a=>({...a,id:Number(a.id)}));if(!Array.isArray(data)){capital=Number(data.capital)||0;transactions=Array.isArray(data.transactions)?data.transactions:[];breedings=Array.isArray(data.breedings)?data.breedings:[];stock=Array.isArray(data.stock)?data.stock:[];healthLogs=Array.isArray(data.healthLogs)?data.healthLogs:[]}save();saveFinance();alert('تم استرجاع النسخة بنجاح.')}catch(err){alert('الملف غير صالح أو لا يحتوي على نسخة سجل حلال صحيحة.')}e.target.value=''});
 $('clearAll').onclick=()=>{if(confirm('تحذير: سيتم حذف كل بيانات الغنم من هذا المتصفح. هل أنت متأكد؟')){animals=[];save()}};
-renderAll();
-if('serviceWorker' in navigator && /^https?:$/.test(location.protocol)){navigator.serviceWorker.register('./sw.js').catch(()=>{});}
+if(!$('txnDate').value)$('txnDate').value=new Date().toISOString().slice(0,10);if(!$('healthDate').value)$('healthDate').value=new Date().toISOString().slice(0,10);if(!$('reportMonth').value)$('reportMonth').value=new Date().toISOString().slice(0,7);renderAll();
 if(location.protocol==='file:' && /iPhone|iPad|iPod/i.test(navigator.userAgent)) showNotice('إذا كنت ترى هذه الصفحة داخل معاينة «الملفات» أو ChatGPT فقد لا تعمل الأزرار. افتح الملف في Safari من قائمة المشاركة إن أمكن. إذا بقيت المشكلة، نزّل نسخة احتياطية قبل إغلاق الصفحة.');
 </script>
 </body></html>
